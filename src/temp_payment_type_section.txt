@@ -1,0 +1,107 @@
+                    
+                    {/* Payment Type Selection */}
+                    <div className="mt-2.5 bg-white border border-[#D9DEE4] rounded p-2 shadow-sm">
+                      <p className="text-[10px] sm:text-xs font-bold text-[#666666] mb-1.5">
+                        {t.paymentType}:
+                      </p>
+                      <div className="space-y-1.5">
+                        {/* Pending Only */}
+                        <label
+                          className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all border ${
+                            paymentType === "pending"
+                              ? "bg-[#D32F2F]/10 border-[#D32F2F]/30 shadow-sm"
+                              : "bg-white border-[#E9F1FA] hover:bg-[#F8FBFF]"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="paymentType"
+                            checked={paymentType === "pending"}
+                            onChange={() => handlePaymentTypeChange("pending")}
+                            className="w-3.5 h-3.5 text-[#D32F2F] accent-[#D32F2F]"
+                          />
+                          <div className="flex-1 flex items-center justify-between">
+                            <span className="text-[10px] sm:text-xs font-semibold text-[#333333]">
+                              {t.pendingOnly}
+                            </span>
+                            <span className={`text-[10px] sm:text-xs font-bold ${
+                              paymentType === "pending" ? "text-[#D32F2F]" : "text-[#666666]"
+                            }`}>
+                              ₹{pendingBillAmount.toFixed(2)}
+                            </span>
+                          </div>
+                        </label>
+
+                        {/* Total Amount */}
+                        <label
+                          className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all border ${
+                            paymentType === "total"
+                              ? "bg-[#2E7D32]/10 border-[#2E7D32]/30 shadow-sm"
+                              : "bg-white border-[#E9F1FA] hover:bg-[#F8FBFF]"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="paymentType"
+                            checked={paymentType === "total"}
+                            onChange={() => handlePaymentTypeChange("total")}
+                            className="w-3.5 h-3.5 text-[#2E7D32] accent-[#2E7D32]"
+                          />
+                          <div className="flex-1 flex items-center justify-between">
+                            <span className="text-[10px] sm:text-xs font-semibold text-[#333333]">
+                              {t.totalAmount}
+                            </span>
+                            <span className={`text-[10px] sm:text-xs font-bold ${
+                              paymentType === "total" ? "text-[#2E7D32]" : "text-[#666666]"
+                            }`}>
+                              ₹{(pendingBillAmount + currentBillAmount).toFixed(2)}
+                            </span>
+                          </div>
+                        </label>
+
+                        {/* Partial Payment */}
+                        <label
+                          className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-all border ${
+                            paymentType === "partial"
+                              ? "bg-[#0077CC]/10 border-[#0077CC]/30 shadow-sm"
+                              : "bg-white border-[#E9F1FA] hover:bg-[#F8FBFF]"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="paymentType"
+                            checked={paymentType === "partial"}
+                            onChange={() => handlePaymentTypeChange("partial")}
+                            className="w-3.5 h-3.5 text-[#0077CC] accent-[#0077CC]"
+                          />
+                          <span className="text-[10px] sm:text-xs font-semibold text-[#333333] flex-1">
+                            {t.partialPayment}
+                          </span>
+                        </label>
+
+                        {/* Partial Amount Input */}
+                        {paymentType === "partial" && (
+                          <div className="pl-5 mt-1">
+                            <input
+                              type="text"
+                              placeholder={t.enterAmount}
+                              value={partialAmount}
+                              onChange={(e) => handlePartialAmountChange(e.target.value)}
+                              className={`w-full px-2 py-1.5 border rounded text-[10px] sm:text-xs font-semibold focus:outline-none focus:ring-2 ${
+                                partialError
+                                  ? "border-[#D32F2F] focus:ring-[#D32F2F]/30 bg-[#D32F2F]/5"
+                                  : "border-[#D9DEE4] focus:ring-[#0077CC]/30"
+                              }`}
+                            />
+                            {partialError && (
+                              <p className="text-[9px] sm:text-[10px] text-[#D32F2F] mt-1 font-medium">
+                                {partialError}
+                              </p>
+                            )}
+                            <p className="text-[9px] sm:text-[10px] text-[#666666] mt-1">
+                              {t.minAmount}: ₹{data.interestAmount.toFixed(2)} | {t.maxAmount}: ₹{(pendingBillAmount + currentBillAmount).toFixed(2)}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
